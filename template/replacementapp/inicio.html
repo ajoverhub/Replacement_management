@@ -1,0 +1,192 @@
+{% load humanize %}
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <meta name="HandheldFriendly" content="true" />
+      <title>{% trans "Ajover Production Monitor" %}</title>
+
+      <!-- Bootstrap core CSS-->
+      <link href="{% static "static_webapp/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+      <!-- Custom fonts for this template-->
+      <link href="{% static "static_webapp/vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="{% static "static_webapp/vendor/datatables/dt/jquery.dataTables.min.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/vendor/datatables/dt/select.dataTables.min.css" %}" rel="stylesheet">
+      <!-- Live Search Select Object -->
+      <link href="{% static "static_webapp/vendor/bootstrap/css/bootstrap-multiselect.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/vendor/bootstrap/css/bootstrap-select.min.css" %}" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="{% static "static_webapp/css/sb-admin.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/css/webappdev-style.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/css/webapp-style.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/css/led_scroller.css" %}" rel="stylesheet">
+      <!--LED-->
+      <link href="{% static "static_webapp/css/Led/jquerysctipttop.css" %}" rel="stylesheet">
+   </head>
+   <body class="fixed-nav template" id="page-top">
+   <!-- Navigation-->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+         <a class="navbar-brand"> <div class="header"><img src="{% static "static_webapp/img/logo_ajover.png" %}" class="img-fluid" height="80" width="80"/> <h3 class="navbar-brand-title"> {% trans "&nbsp; Administración Bodega Repuestos" %} </h3> </div> </a>
+         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+
+         <!--Collapsible navigation bar-->
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+               <!--Multilanguage-->
+               <li class="nav-item">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sede
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <!-- Lista de sedes -->
+                      <a id="BusinessUnit" data-value="ZDM02" class="dropdown-item" href="javascript:void(0)">ZDM02</a>
+                      <a id="BusinessUnit" data-value="SPM02" class="dropdown-item" href="javascript:void(0)">SPM02</a>
+                      <a id="BusinessUnit" data-value="QTM02" class="dropdown-item" href="javascript:void(0)">QTM02</a>
+                      <a id="BusinessUnit" data-value="PCM02" class="dropdown-item" href="javascript:void(0)">PCM02</a>
+                      <a id="BusinessUnit" data-value="NVM02" class="dropdown-item" href="javascript:void(0)">NVM02</a>
+                      <a id="BusinessUnit" data-value="ECM02" class="dropdown-item" href="javascript:void(0)">ECM02</a>
+                      <a id="BusinessUnit" data-value="DXM02" class="dropdown-item" href="javascript:void(0)">DXM02</a>
+                      <a id="BusinessUnit" data-value="DUM01" class="dropdown-item" href="javascript:void(0)">DUM01</a>
+                      <a id="BusinessUnit" data-value="DAM01" class="dropdown-item" href="javascript:void(0)">DAM01</a>
+                      <a id="BusinessUnit" data-value="CTM02" class="dropdown-item" href="javascript:void(0)">CTM02</a>
+                      <a id="BusinessUnit" data-value="CBM02" class="dropdown-item" href="javascript:void(0)">CBM02</a>
+                      <a id="BusinessUnit" data-value="AJM43" class="dropdown-item" href="javascript:void(0)">AJM43</a>
+                      <a id="BusinessUnit" data-value="AJM12" class="dropdown-item" href="javascript:void(0)">AJM12</a>
+                      <a id="BusinessUnit" data-value="AJM03" class="dropdown-item" href="javascript:void(0)">AJM03</a>
+                      <a id="BusinessUnit" data-value="AJM02" class="dropdown-item" href="javascript:void(0)">AJM02</a>
+                      <a id="BusinessUnit" data-value="AJM01" class="dropdown-item" href="javascript:void(0)">AJM01</a>
+                    </div>
+                  </div>
+                </li>
+
+               <li class="nav-item">
+                  <form  method="post">
+                     {% csrf_token %}
+                     <input name="next" type="hidden" value="{{ redirect_to }}" />
+                     {% get_current_language as LANGUAGE_CODE %}
+                     {% get_available_languages as LANGUAGES %}
+                     {% get_language_info_list for LANGUAGES as languages %}
+                     {% for language in languages %}
+                     <button title="{{ language.name_local |title }}" name="language" type="submit" class="btn btn-xs" value="{{ language.code }}">{{ language.code | upper }}</button>
+                     {% endfor %}
+                     <input id="currentLang" value="{{LANGUAGE_CODE}}" type="hidden"/>
+                  </form>
+               </li>
+               <!--Logout button-->
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                  <i class="fa fa-fw fa-sign-out"></i>{% trans "Logout" %}
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+   <div class="container-fluid" id="MainDiv">
+      
+         <!--div que contiene los botones de navegabilidad en dispositivos móviles con pantallas pequeñas-->
+         <nav class="navbar navbar-inverse" id="webapp-nav-panel">
+            <div class="container-fluid">
+               <a href="#first-section" class="btn btn-info btn-lg">
+               <i class="fa fa-cog fa-1x"></i>
+               </a>
+               <a href="#second-section" class="btn btn-info btn-lg">
+               <i class="fa fa-bar-chart fa-1x"></i>
+               </a>
+               <a href="#third-section" class="btn btn-info btn-lg">
+               <i class="fa fa-envelope fa-1x"></i>
+               </a>
+               <a href="#fourth-section" class="btn btn-info btn-lg">
+               <i class="fa fa-file-image-o fa-1x"></i>
+               </a>
+            </div>
+         </nav>
+
+         <!-- Cuerpo de la aplicación--> 
+         <div class="row">
+         </br>
+         </br>
+         </div>
+
+      <div class="row text-center content_login ">
+
+         <div class= "">
+            <div class="bg-custom col-12 panelcontent panelcontent-chart ">
+                  <div class="card-body p-2 ">
+                     <h4 class="text-center text-wrap text-white"> Solicitud de repuestos - Almacén de Mantenimiento</h4>
+                  </div>
+            </div>
+            <div class="pt-5"></div>
+            <div class="p-5 col-12 panelcontent panelcontent-chart opac-background ">
+               <div>
+                  <div class="card-body p-1 ">
+                     
+                        <div class="form-group row">
+                        <h5 for="No.OrdenTrabajo" class="col-sm-5 col-form-label text-white"><b>No. Orden de trabajo</b></h5>
+                        <div class="col-sm-7">
+                           <input type="text" class="form-control" id="No_OrdenTrabajo" >
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <h5 for="Cod.Kronos" class="col-sm-5 col-form-label text-white"><b>Codigo Kronos</b></h5>
+                        <div class="col-sm-7">
+                           <input type="text" class="form-control" id="Cod_Kronos">
+                        </div>
+                        </div>
+                        <div class="pt-5"></div>
+                        <div class="d-flex justify-content-around">
+                           <button type="button "  id="btn_buscar" class="col-sm-5 btn bg-dark text-white btn-lg" >Buscar</button>
+                           <button type="button "  id ="btn_limpiar"class="col-sm-5 btn bg-dark text-white btn-lg">Limpiar</button>
+                        </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>      
+
+
+
+      <script src="{% static "static_webapp/vendor/chart.js/moment.min.js"%}"></script>
+
+      <script src="{% static "static_webapp/vendor/jquery/jquery.min.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+      <!-- Live Search Select Object -->
+      <script src="{% static "static_webapp/vendor/bootstrap/js/bootstrap-multiselect.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/bootstrap/js/bootstrap-select.min.js" %}"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="{% static "static_webapp/vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{% static "static_webapp/js/sb-admin.min.js" %}"></script>
+      <!-- Page level plugin JavaScript-->
+ 
+      <script src="{% static "static_webapp/vendor/datatables/jquery.dataTables.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/datatables/dataTables.bootstrap4.js" %}"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{% static "static_webapp/js/sb-admin.min.js" %}"></script>
+      <!-- Custom scripts for this page-->
+      <script src="{% static "static_webapp/js/sb-admin-datatables.min.js" %}"></script>
+     
+
+      <script src="{% static "static_webapp/vendor/datatables/dt/jquery.dataTables.min.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/datatables/dt/dataTables.select.min.js" %}"></script>
+
+      <!-- Functions Scripts -->
+      <script src="{% static "static_webapp/replacementapp-scripts.js" %}"></script>
+      <script src="{% static "static_webapp/led_scroller.js" %}"></script>
+      <!-- Led -->
+      <script src="{% static "static_webapp/js/Led/led_display.js" %}"></script>
+      <script src="{% static "static_webapp/js/Led/led_display.js" %}"></script>
+      <!-- animacion en Boots -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   </body>
+</html>

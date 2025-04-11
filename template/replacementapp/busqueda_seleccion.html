@@ -1,0 +1,202 @@
+{% load humanize %}
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <meta name="HandheldFriendly" content="true" />
+      <title>{% trans "Ajover Production Monitor" %}</title>
+
+      <!-- Bootstrap core CSS-->
+      <link href="{% static "static_webapp/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+      <!-- Custom fonts for this template-->
+      <link href="{% static "static_webapp/vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link href="{% static "static_webapp/vendor/datatables/dt/jquery.dataTables.min.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/vendor/datatables/dt/select.dataTables.min.css" %}" rel="stylesheet">
+ 
+      <!-- Live Search Select Object -->
+      <link href="{% static "static_webapp/vendor/bootstrap/css/bootstrap-multiselect.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/vendor/bootstrap/css/bootstrap-select.min.css" %}" rel="stylesheet">
+      <!-- Custom styles for this template-->
+      <link href="{% static "static_webapp/css/sb-admin.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/css/webappdev-style.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/css/webapp-style.css" %}" rel="stylesheet">
+      <link href="{% static "static_webapp/css/led_scroller.css" %}" rel="stylesheet">
+      <!--LED-->
+      <link href="{% static "static_webapp/css/Led/jquerysctipttop.css" %}" rel="stylesheet">        
+
+   </head>
+   <body class="fixed-nav template pt-5" id="page-top">
+   <!-- Navigation-->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" style="padding-bottom: 0%; padding-top: 0%;">
+         <a class="navbar-brand"> <div class="header"><img src="{% static "static_webapp/img/logo_ajover.png" %}" class="img-fluid" height="80" width="80"/> <h6 class="navbar-brand-title"> {% trans "&nbsp; Administración Bodega Repuestos" %} </h6> </div> </a>
+         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+
+         <!--Collapsible navigation bar-->
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+               <!--Multilanguage-->
+              
+               <li class="nav-item">
+                  <form  method="post">
+                     {% csrf_token %}
+                     <input name="next" type="hidden" value="{{ redirect_to }}" />
+                     {% get_current_language as LANGUAGE_CODE %}
+                     {% get_available_languages as LANGUAGES %}
+                     {% get_language_info_list for LANGUAGES as languages %}
+                     {% for language in languages %}
+                     <button title="{{ language.name_local |title }}" name="language" type="submit" class="btn btn-xs" value="{{ language.code }}">{{ language.code | upper }}</button>
+                     {% endfor %}
+                     <input id="currentLang" value="{{LANGUAGE_CODE}}" type="hidden"/>
+                  </form>
+               </li>
+               <!--Logout button-->
+               <li class="nav-item">
+                  <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                  <i class="fa fa-fw fa-sign-out"></i>{% trans "Logout" %}
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+   <div class="container-fluid" id="MainDiv">
+         <!-- Cuerpo de la aplicación -->
+          
+<div class="container-fluid">
+   <div class="row mt-4">
+
+       <!-- Columna izquierda para buscar repuesto -->
+
+         <div class="card col-6 opac-back">
+            <div class="row d-flex justify-content-end pt-1 pb-1">
+               <input type="text" class="col-4 form-control h-50 " style="font-size:0.6em" id="repuesto" placeholder="Descripción Repuesto">
+               
+               <!-- Contenedor del icono y texto para leer código de barras -->
+               <div>
+                   <i class="col-1 fa fa-barcode fa-2x d-flex flex-column text-wrap" aria-hidden="true" onclick="codigobarras()"></i>
+                   <p style="font-size:0.5em">Leer Cod.Barras</p>
+               </div>
+           
+               <!-- Botón para buscar producto -->
+               <button type="button" class="btn bg-yellow h-50 center-button mr-3 btn-sm" onclick="buscarProducto()">Buscar</button>
+           </div>
+           <!-- Modal para capturar código de barras -->
+           <div class="modal" tabindex="-1" id="barcodeModal" style="display: none;">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <h5 class="modal-title">Capturar Código de Barras</h5>
+                           <p> </p>
+                       </div>
+                       <div class="modal-body">
+                           <input type="text" id="barcodeInput" class="form-control" placeholder="Escanear o escribir código de barras" autofocus>
+                       </div>
+                       <div class="modal-footer row justify-content-end m-2">
+                           <button type="button" class="btn bg-yellow m-1 btn-sm" onclick="confirmarcodbarras()">Aceptar</button>
+                           <button type="button" class="btn bg-gray m-1 btn-sm" onclick="cerrarcodigobarras()">Cancelar</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           
+            <div>
+               <form>
+                  <table class="table table-bordered" id="searchTable">
+                     <thead class="thead azul-petroleo">
+                       <tr>
+                         <th class ="table-text" scope="col">Codigo</th>
+                         <th class ="table-text" scope="col">Descripción</th>
+                         <th class ="table-text" scope="col">Ubicacion</th>
+                         <th class ="table-text" scope="col">Cant. Disponible</th>
+                         <th class ="table-text" scope="col">Und. medida</th>
+                         <th class ="table-text" scope="col">Cant. Requerida.</th>
+                       </tr>
+                     </thead>
+                     <tbody id ="searchTable_tbody">                
+                     </tbody>
+                   </table>
+                   <div class="row justify-content-end m-2 " >
+                     <button type="button" class="btn bg-green btn-sm" onclick="Añadir()">Añadir</button>
+                   </div>              
+              </form>
+            </div>
+
+         </div>
+         <div class="card col-6 opac-back ">
+               <p class="text-center text-white font-weight-bold aplication-card bg-dark" style="margin-bottom: 0px; font-size: 13px">Resumen de la Solicitud</p>
+            <div class="row text-white m-1">
+               <div class="col-12 col-md-6 d-flex justify-content-between align-items-center mt-1 text-dark pl-2 pr-0 font-weight-bold">
+                  <span id="ordtrabajo" style="font-size: 13px;"></span>
+               </div>
+               <div class="col-12 col-md-6 d-flex justify-content-between align-items-center mt-1 text-dark p-0 font-weight-bold">
+                  <span id="tecnico" style="font-size: 13px;"></span>
+               </div>
+            </div>
+               <div class="pt-3">
+                  <form>
+                     <table class="table table-bordered" id="resumenTable">
+                        <thead class="thead azul-petroleo">
+                           <tr>
+                              <th class ="table-text">Descripción</th>
+                              <th class ="table-text">Código</th>
+                              <th class ="table-text">Cantidad Requerida</th>
+                              <th class ="table-text">Eliminar</th>
+                           </tr>                          
+                        </thead>
+                        <tbody id = "resumenTable_tbody">
+                        </tbody>
+                      </table>
+                      <div class="row justify-content-end m-2" >
+                        <button type="button" class="btn bg-yellow m-1 btn-sm" id="btnSolicitar" onclick="solicitar()">Solicitar</button>
+                        <button type="button" class="btn bg-red m-1 btn-sm" onclick="limpiar()">Limpiar</button>
+                        <button type="button" class="btn bg-gray m-1 btn-sm" onclick="cancelar()">Cancelar</button>
+                     </div>
+                 </form>
+               </div>               
+         </div>
+      </div>
+   </div>
+</body>
+      <script src="{% static "static_webapp/vendor/chart.js/moment.min.js"%}"></script>
+
+      <script src="{% static "static_webapp/vendor/jquery/jquery.min.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+      <!-- Live Search Select Object -->
+      <script src="{% static "static_webapp/vendor/bootstrap/js/bootstrap-multiselect.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/bootstrap/js/bootstrap-select.min.js" %}"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="{% static "static_webapp/vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{% static "static_webapp/js/sb-admin.min.js" %}"></script>
+      <!-- Page level plugin JavaScript-->
+       <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+ 
+      <script src="{% static "static_webapp/vendor/datatables/jquery.dataTables.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/datatables/dataTables.bootstrap4.js" %}"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{% static "static_webapp/js/sb-admin.min.js" %}"></script>
+      <!-- Custom scripts for this page-->
+      <script src="{% static "static_webapp/js/sb-admin-datatables.min.js" %}"></script>
+      
+      <script src="{% static "static_webapp/vendor/datatables/dt/jquery.dataTables.min.js" %}"></script>
+      <script src="{% static "static_webapp/vendor/datatables/dt/dataTables.select.min.js" %}"></script>
+
+      <!-- Functions Scripts -->
+      <script src="{% static "static_webapp/replacementapp-scripts.js" %}"></script>
+      <script src="{% static "static_webapp/led_scroller.js" %}"></script>
+      <!-- Led -->
+      <script src="{% static "static_webapp/js/Led/led_display.js" %}"></script>
+      <script src="{% static "static_webapp/js/Led/led_display.js" %}"></script>
+      <!-- animacion en Boots -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   </body>
+</html>

@@ -1,0 +1,157 @@
+
+.opac-background  {
+    background-color: rgba(106, 156, 168, 0.815)!important ;
+    border-radius: 20px ;
+}
+.opac-back  {
+  background-color: rgba(218, 213, 213, 0.61)!important ;
+  border-radius: 20px ;
+}
+.dropdown-item.selected {
+  background-color: #484d52;
+  color: white;
+}
+
+.bg-custom {
+    background-color: rgba(106, 156, 168);
+    border-radius: 15px ;
+  }
+.content_login{
+    display: flex ;
+    justify-content: center;
+}
+/*para la tabla */
+  .table-spaced {
+    min-height: 400px; 
+    border: 3px solid #acacac5d; 
+    padding: 100% 0; 
+  }
+  .azul-petroleo {
+    background-color:#169BB0; 
+    color: rgba(255, 255, 255, 0.799);
+  }
+  .table-bordered {
+    border: 10% solid #ccc; 
+  }
+  .table-bordered th, .table-bordered td {
+    border: 1px solid #ccc; 
+  }
+  
+  .table-spaced td, .table-spaced th {
+    vertical-align: middle; 
+  }
+  
+  .table-spaced .no-data {
+    text-align: center;
+    vertical-align: middle;
+    font-style: italic;
+    color: #545454;
+  }
+  .aplication-card {
+    width: 100%;        
+    min-height: 40px;   /* Ajusta este valor según el tamaño mínimo que desees para la tarjeta */
+    margin-top: 1%;       
+    transition: min-height 0.3s ease; /* Suaviza la expansión de la tarjeta */
+}
+  /*aumentar cantidad */
+  .cantidad-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table-text{
+  font-size: 40% !important ;
+}
+.table-texto{
+  font-size: 50% !important ;
+}
+
+.cantidad-controls .decrease {
+    width: 10%;
+    height: 10%;
+    background-color: #EBC688;
+    border: #ffc257;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 2%;
+    font-size: 50%;
+}
+
+.quantity-input {
+    width: 30%;
+    text-align: center;
+    border: #ccc;
+    background-color: #EBC688;
+    height: 10%;
+    font-size: 50%;
+}
+
+
+/*botones  */
+:root {
+    --yellow: 238, 194, 144; 
+  --green: 144, 238, 144;
+  --red: 241, 129, 129;
+  --gray: 81, 81, 81;   
+}
+
+/* Función para aplicar opacidad */
+.bg-opacity {
+  background-color: rgba(var(--yellow), var(--opacity, 6)); 
+  
+}
+  .bg-yellow {
+    background-color: rgba(var(--yellow), 0.8); 
+  }
+  
+  .bg-green {
+    background-color: rgba(var(--green), 0.7); 
+  }
+  
+  .bg-red {
+    background-color: rgba(var(--red), 0.9); 
+  }
+  
+  .bg-gray {
+    background-color: rgba(var(--gray), 0.9);
+    border: 1px solid #cccccc38;  
+  }
+  .center-button {
+    height: 50px; /* Ajusta la altura */
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+  }
+  .dataTables_empty {
+    display: none;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog {
+    width: 500px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.897);
+}
+
+.modal-header,
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 20px ;
+    margin: 0%;
+}
+
+

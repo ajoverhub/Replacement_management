@@ -1,0 +1,146 @@
+table.dataTable {
+    clear: both;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    max-width: none !important;
+    border-collapse: separate !important;
+}
+
+table.dataTable td,
+table.dataTable th {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+table.dataTable td.dataTables_empty,
+table.dataTable th.dataTables_empty {
+    text-align: center;
+}
+
+table.dataTable.nowrap th,
+table.dataTable.nowrap td {
+    white-space: nowrap;
+}
+
+/* Cambiar el tamaño de la fuente para el control de longitud de filas */
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 12px; /* Fuente más pequeña para el control de longitud */
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 60px;  /* Reducir el tamaño del select */
+    display: inline-block;
+    font-size: 12px; /* Ajustar el tamaño del select */
+}
+
+/* Cambiar el tamaño de la fuente para el control de búsqueda */
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left;
+    font-size: 12px; /* Fuente más pequeña para el control de búsqueda */
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    display: inline-block;
+    width: auto;
+    font-size: 12px; /* Ajustar el tamaño del input */
+}
+
+/* Cambiar el tamaño de la fuente de la información de la tabla */
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 8px;
+    white-space: nowrap;
+    font-size: 12px; /* Fuente más pequeña para la información */
+}
+
+/* Cambiar el tamaño de los controles de paginación */
+div.dataTables_wrapper div.dataTables_paginate {
+    margin: 0;
+    white-space: nowrap;
+    text-align: right;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+    font-size: 12px; /* Fuente más pequeña para los elementos de la paginación */
+}
+
+div.dataTables_wrapper div.dataTables_paginate .paginate_button {
+    font-size: 12px; /* Fuente más pequeña para los botones de paginación */
+}
+
+/* Cambiar el tamaño de los botones de paginación */
+div.dataTables_wrapper div.dataTables_paginate .paginate_button {
+    padding: 2px 8px;  /* Botones más pequeños */
+    font-size: 12px; /* Fuente más pequeña para los botones */
+}
+
+/* Cambiar el tamaño de las celdas en la tabla */
+table.dataTable td, table.dataTable th {
+    font-size: 12px; /* Cambia el tamaño de la fuente en las celdas */
+}
+
+/* Estilos adicionales si es necesario */
+table.dataTable.table-condensed>thead>tr>th {
+    padding-right: 20px;
+}
+
+table.dataTable.table-condensed .sorting:after,
+table.dataTable.table-condensed .sorting_asc:after,
+table.dataTable.table-condensed .sorting_desc:after {
+    top: 6px;
+    right: 6px;
+}
+
+table.table-bordered.dataTable th,
+table.table-bordered.dataTable td {
+    border-left-width: 0;
+}
+
+table.table-bordered.dataTable th:last-child,
+table.table-bordered.dataTable th:last-child,
+table.table-bordered.dataTable td:last-child,
+table.table-bordered.dataTable td:last-child {
+    border-right-width: 0;
+}
+
+table.table-bordered.dataTable tbody th,
+table.table-bordered.dataTable tbody td {
+    border-bottom-width: 0;
+}
+
+div.dataTables_scrollHead table.table-bordered {
+    border-bottom-width: 0;
+}
+
+/* Para pantallas pequeñas */
+@media screen and (max-width: 699px) {
+    div.dataTables_wrapper div.dataTables_length,
+    div.dataTables_wrapper div.dataTables_filter,
+    div.dataTables_wrapper div.dataTables_info,
+    div.dataTables_wrapper div.dataTables_paginate {
+        text-align: center;
+    }
+}
+
+div.table-responsive>div.dataTables_wrapper>div.row {
+    margin: 0;
+}
+
+div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:first-child {
+    padding-left: 0;
+}
+
+div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:last-child {
+    padding-right: 0;
+}

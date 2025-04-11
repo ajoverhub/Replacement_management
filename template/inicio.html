@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Consulta</title>
+</head>
+<body>
+    <h1>Administración de Inventario Bodega de Repuestos</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="kronos_code">Código Kronos:</label>
+        <input type="text" id="kronos_code" name="kronos_code" required>
+        <br><br>
+
+        <label for="work_order">Orden de Trabajo:</label>
+        <input type="text" id="work_order" name="work_order" required>
+        <br><br>
+
+        <button type="submit">Consultar</button>
+    </form>
+</body>
+</html>
+

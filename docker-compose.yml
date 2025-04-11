@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+   web:
+      build: .
+      container_name: Replacement_Management_YMENJURA
+      volumes:
+       - .:/code
+       - ./json:/code/json
+       - /etc/localtime:/etc/localtime:ro
+      environment:
+      - TZ:America/Bogota
+      ports:
+       - 7184:80
+      restart: always
+      networks:
+       - network_usrtest
+
+networks:
+   network_usrtest:
+     external: true

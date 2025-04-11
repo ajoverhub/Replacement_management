@@ -1,0 +1,285 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  /* turn off bootstrap default svg chevrons */
+  background-image: none;
+
+  /* override bootstraps fixed size */
+  width: auto;
+  height: auto;
+
+  /* set the size and color of the FontAwesome chevrons */
+  font-size: 1.5rem;
+  color: $carousel-control-color;
+
+  /* extend FontAwesome */
+  @extend .fa;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon,
+.carousel-caption {
+  /* add a text shadow to the chevrons and caption (inner text) to make them visible on white backgrounds */
+  text-shadow: 0 0 0.8rem black;
+}
+.carousel-control-prev-icon {
+  /* extend FontAwesome left chevron*/
+  @extend .fa-chevron-left;
+}
+.carousel-control-next-icon {
+  /* extend FontAwesome right chevron*/
+  @extend .fa-chevron-right;
+}
+.carousel-indicators li {
+  /* add a box shadow to the indicators to make them visible on white backgrounds */
+  box-shadow: 0 1px 0.4rem rgba(0, 0, 0, 0.5);
+}
+
+.formChecklist{
+    margin-left: 40px;
+}
+
+body {
+    background: url('warehouse.png');
+}
+
+.panelcontent {
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    height: 280px;
+}
+
+.panelcontent-top {
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    height: 150px;
+}
+
+.panelcontent-top-rugged {
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    height: 150px;
+}
+
+.panelcontent-chart {
+    height: auto;
+    width: auto;
+}
+
+.panelcontent-chart-rugged {
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    height: 250px;
+}
+
+.thead-rugged {
+    display:none;
+}
+
+table.table-rugged tr td { font-size: 14px; }
+
+.panelcontent-left {
+    padding-bottom: 2.5px;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+    padding-top: 7.5px;
+}
+
+.panelcontent-right {
+    padding-bottom: 2.5px;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
+    padding-top: 7.5px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.grapcontent {
+    display:block;
+    margin: 0 auto;
+}
+
+.btn-size {
+    text-align: center;
+    line-height: 1em
+    padding: 30px 150px;
+    display:block;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+@media only screen and (min-width: 740px) {
+    #webapp-nav-panel {
+        display: none;
+    }
+}
+
+#panelcontent-img {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form-horizontal .label-page{
+    text-align: right;
+}
+
+.focus-data-form{
+    border: 2px solid red;
+    border-radius: 4px;
+}
+
+.option-machine-selected{
+    text-align: center;
+}
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -35px;
+  margin-right: 5px;
+  position: relative;
+  z-index: 2;
+}
+
+.incorrect-password{
+    text-align: right;
+    color: red;
+    font-style: italic;
+    /*display: none;*/
+}
+
+.capslock-field{
+    text-align: left;
+    color: blue;
+    font-style: italic;
+}
+
+.btn-primary-stop-register-falla-proceso{
+    white-space: normal;
+}
+
+.btn-primary-stop-register-cambio-rollo{
+    white-space: normal;
+}
+
+.btn-primary-stop-register-falla-tec{
+    white-space: normal;
+}
+
+.modal-xlg{
+    max-width: 90%;
+}
+
+.btn-report-downtime-tecnical-reason {
+    white-space: normal;
+    height: 60px;
+}
+
+.div-report-downtime-tecnical-reason {
+    padding: 5px 5px 5px 5px
+}
+
+.canvasld {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 600px;
+}
+
+.breadcrumb-displayld {
+    border-style: solid;
+    border-width: 5px;
+    border-color: #e9ecef;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 610px;
+    background-color: #e9ecef;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+table, th, td {
+    font-size: 15px;
+    border: 2px solid black;
+}
+
+.btn-login {
+    margin-left: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.navbar-brand-title {
+    color: white;
+}
+
+.header img {
+  float: left;
+}
+
+.header h5 {
+  position: relative;
+  left: 15px;
+  top: 5px;
+}
+
+.dropdown-menu label.radio input[type=radio]{
+    visibility: hidden;
+}
+.dropdown-menu label.radio{
+    padding-left:10px;
+}
+
+.dropdown-menu {
+max-height: 500px;
+overflow-y: auto;
+overflow-x: hidden;
+}
+
+.tech-reason-container{
+    max-height: 190px;
+    overflow-y: scroll;
+}
+
+.create-wor-container{
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.work-order-request-container{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.parallel-plan-container{
+    max-height: 400px;
+    overflow-y: scroll;
+}
